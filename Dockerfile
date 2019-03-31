@@ -1,4 +1,4 @@
-FROM mmochizuki/ubuntu-ml-base:latest
+FROM mmochizuki/ubuntu-ml-base:v0.3
 
 USER root
 ENV DEBIAN_FRONTEND=noninteractive 
