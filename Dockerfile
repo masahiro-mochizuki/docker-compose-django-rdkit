@@ -8,7 +8,6 @@ RUN apt-get update && \
     libeigen3-dev libcairo2-dev \
     postgresql-10 postgresql-server-dev-10
 
-#RUN echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 COPY pg_hba.conf /etc/postgresql/10/main/
 
 WORKDIR /tmp
@@ -37,22 +36,14 @@ RUN service postgresql start && su --login postgres --command "createuser -w -s 
     service postgresql stop
 
 RUN echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-# RUN chmod o+wx /home/user/work
 
 USER user
 RUN sudo service postgresql start && sudo su --login postgres --command "createuser -w -s user" && \
     createdb && sudo service postgresql stop
-#RUN mkdir /home/user/work
 WORKDIR /home/user/
-#COPY startup.sh .
-#RUN mkdir /code
-#WORKDIR /code
-#ADD . /code/
 
 WORKDIR /home/user/work
-#CMD ["sudo", "service", "postgresql", "start"]
 COPY startup.sh .
 CMD ["bash", "startup.sh"]
 
-#ENV PYTHONUNBUFFERED 1
 

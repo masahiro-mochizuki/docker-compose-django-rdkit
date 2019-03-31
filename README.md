@@ -31,7 +31,7 @@ An example code of accessing PostgresSQL from jupyter is `examples/db_example.ip
 ### Excecute a python code
 you can execute a python code without PostgreSQL database:
 ```
-docker-compose run default  python examples/mw_from_smiles.py CCC
+docker-compose run default python examples/mw_from_smiles.py CCC
 ```
 
 ## Services
