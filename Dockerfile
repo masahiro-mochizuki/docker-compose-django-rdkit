@@ -1,4 +1,4 @@
-FROM mmochizuki/ubuntu-ml-base:v0.3
+FROM mmochizuki/ubuntu-ml-base:v0.4
 
 USER root
 ENV DEBIAN_FRONTEND=noninteractive 
@@ -15,7 +15,7 @@ WORKDIR /tmp
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-ENV RDKIT_VERSION 2018_09_2
+ENV RDKIT_VERSION 2019_03_1
 RUN wget -q https://github.com/rdkit/rdkit/archive/Release_$RDKIT_VERSION.tar.gz  && \
     tar xf Release_$RDKIT_VERSION.tar.gz
 ENV RDBASE=/tmp/rdkit-Release_$RDKIT_VERSION
@@ -29,7 +29,7 @@ RUN mkdir build
 WORKDIR build
 RUN cmake .. -DPYTHON_EXECUTABLE="/usr/bin/python3" -DRDK_BUILD_PGSQL=ON -DRDK_BUILD_CAIRO_SUPPORT=ON -DRDK_BUILD_INCHI_SUPPORT=ON -DRDK_BUILD_AVALON_SUPPORT=ON 
 
-RUN make -j4 && make install
+RUN make -j$(nproc) && make install
 
 RUN service postgresql start && su --login postgres --command "createuser -w -s root" && \
     sh Code/PgSQL/rdkit/pgsql_install.sh && sh Code/PgSQL/rdkit/pgsql_regress.sh && ctest -j4 && \
@@ -45,5 +45,3 @@ WORKDIR /home/user/
 WORKDIR /home/user/work
 COPY startup.sh .
 CMD ["bash", "startup.sh"]
-
-
