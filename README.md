@@ -37,7 +37,7 @@ docker-compose run default python examples/mw_from_smiles.py CCC
 ## Services
 ### default
 - Python (version 3.6.0)
-   - RDKit (version 2018.09.1.0)
+   - RDKit (version 2019.03.1)
    - scikit-learn
    - lightGBM
    - chainer
