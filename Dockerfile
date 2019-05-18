@@ -40,7 +40,6 @@ RUN echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER user
 RUN sudo service postgresql start && sudo su --login postgres --command "createuser -w -s user" && \
     createdb && sudo service postgresql stop
-WORKDIR /home/user/
 
 WORKDIR /home/user/work
 COPY startup.sh .
